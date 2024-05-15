@@ -4,6 +4,7 @@ import { getAllGenders } from './api';
 
 const GenresScreen = () => {
   const [genres, setGenres] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchGenres();
@@ -13,6 +14,7 @@ const GenresScreen = () => {
     try {
       const response = await getAllGenders();
       setGenres(response.result);
+      setLoading(false); // Cambia el estado de carga a falso cuando los datos se cargan con éxito
     } catch (error) {
       console.error('Error fetching genres:', error);
     }
@@ -21,13 +23,19 @@ const GenresScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Géneros Musicales</Text>
-      <View style={styles.grid}>
-        {genres.map((genre, index) => (
-          <TouchableOpacity key={index} style={styles.genreButton}>
-            <Text style={styles.genreText}>{genre.nombre_genero}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      {loading ? ( // Muestra "Cargando..." mientras los datos se están recuperando
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Cargando...</Text>
+        </View>
+      ) : (
+        <View style={styles.grid}>
+          {genres.map((genre, index) => (
+            <TouchableOpacity key={index} style={styles.genreButton}>
+              <Text style={styles.genreText}>{genre.nombre_genero}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
     </View>
   );
 };
@@ -65,6 +73,22 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: 'white',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  },
+  loadingText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'red',
   },
 });
 
