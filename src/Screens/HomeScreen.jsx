@@ -43,18 +43,6 @@ const HomeScreen = () => {
 
       <ReactNative.Text style={styles.sectionTitle}>Álbums</ReactNative.Text>
       <ReactNative.View style={styles.albumRow}>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <ReactNative.View key={index} style={styles.albumCardSquare}>
-            <ReactNative.View style={styles.albumImageContainer}>
-              <ReactNative.Image
-                style={styles.albumImageSquare}
-                source={{ uri: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/Parachute.jpg' }}
-              />
-            </ReactNative.View>
-            <ReactNative.Text style={styles.albumText}>Parachutes {index + 1}</ReactNative.Text>
-            <ReactNative.Text style={styles.albumText}>Coldplay</ReactNative.Text>
-          </ReactNative.View>
-        ))}
 
   {Array.from({ length: 3 }).map((_, index) => (
           <ReactNative.View key={index} style={styles.albumCardSquare}>
@@ -73,17 +61,7 @@ const HomeScreen = () => {
 
       <ReactNative.Text style={styles.sectionTitle}>Artistas</ReactNative.Text>
       <ReactNative.View style={styles.ArtistaRow}>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <ReactNative.View key={index} style={styles.ArtistaCardRound}>
-            <ReactNative.View style={styles.ArtistaImageContainer}>
-              <ReactNative.Image
-                style={styles.ArtistaImageRound}
-                source={{ uri: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/coldplay.jpeg' }}
-              />
-            </ReactNative.View>
-            <ReactNative.Text style={styles.ArtistaText}>Coldplay</ReactNative.Text>
-          </ReactNative.View>
-        ))}
+
 
 {Array.from({ length: 3 }).map((_, index) => (
           <ReactNative.View key={index} style={styles.ArtistaCardRound}>

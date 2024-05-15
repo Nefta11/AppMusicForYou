@@ -1,28 +1,40 @@
-import * as ReactNative from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { getAllGenders } from '../Screens/api'; // Asegúrate de importar correctamente las funciones API
 
 const GenresScreen = () => {
-  // Lista de géneros musicales
-  const genres = [
-    'Pop', 'Rock', 'K-Pop','Jazz', 'Hip Hop',
-    'Country', 'Disco', 'Funk', 'Reggaetón',
-    'Cumbia', 'Latino', 'Punk', 'Salsa', 'Merengue'
-  ];
+  const [genres, setGenres] = useState([]); // Estado para almacenar los géneros musicales
+
+  // Función para cargar los géneros musicales desde la base de datos
+  const fetchGenres = async () => {
+    try {
+      const response = await getAllGenders(); // Llama a la función getAllGenders de tu API
+      setGenres(response); // Actualiza el estado con los géneros obtenidos
+    } catch (error) {
+      console.error('Error fetching genres:', error);
+    }
+  };
+
+  // Cargar los géneros al cargar el componente
+  useEffect(() => {
+    fetchGenres();
+  }, []);
 
   return (
-    <ReactNative.View style={styles.container}>
-      <ReactNative.Text style={styles.headerText}>Géneros Musicales</ReactNative.Text>
-      <ReactNative.View style={styles.grid}>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Géneros Musicales</Text>
+      <View style={styles.grid}>
         {genres.map((genre, index) => (
-          <ReactNative.TouchableOpacity key={index} style={styles.genreButton}>
-            <ReactNative.Text style={styles.genreText}>{genre}</ReactNative.Text>
-          </ReactNative.TouchableOpacity>
+          <TouchableOpacity key={index} style={styles.genreButton}>
+            <Text style={styles.genreText}>{genre.nombre_genero}</Text>
+          </TouchableOpacity>
         ))}
-      </ReactNative.View>
-    </ReactNative.View>
+      </View>
+    </View>
   );
 };
 
-const styles = ReactNative.StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -34,7 +46,6 @@ const styles = ReactNative.StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: 'red',
-    marginBottom: 40
   },
   grid: {
     flexDirection: 'row',
