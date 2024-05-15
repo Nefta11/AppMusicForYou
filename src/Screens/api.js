@@ -1,4 +1,4 @@
-const URL_API = 'http://localhost:8000/api/Personas';
+const URL_API = 'https://site--apimfu--4nfy6d8474fb.code.run/api/Personas';
 
 export const addPerson = async (personData) => {
     const response = await fetch(`${URL_API}/addPerson`, {
