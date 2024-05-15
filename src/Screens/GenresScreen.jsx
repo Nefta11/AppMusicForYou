@@ -1,26 +1,38 @@
-import * as ReactNative from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { getAllGenders } from './api';
 
 const GenresScreen = () => {
-  // Lista de géneros musicales
-  const genres = [
-    'Pop', 'Rock', 'K-Pop','Jazz', 'Hip Hop'
-  ];
+  const [genres, setGenres] = useState([]);
+
+  useEffect(() => {
+    fetchGenres();
+  }, []);
+
+  const fetchGenres = async () => {
+    try {
+      const response = await getAllGenders();
+      setGenres(response.result);
+    } catch (error) {
+      console.error('Error fetching genres:', error);
+    }
+  };
 
   return (
-    <ReactNative.View style={styles.container}>
-      <ReactNative.Text style={styles.headerText}>Géneros Musicales</ReactNative.Text>
-      <ReactNative.View style={styles.grid}>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Géneros Musicales</Text>
+      <View style={styles.grid}>
         {genres.map((genre, index) => (
-          <ReactNative.TouchableOpacity key={index} style={styles.genreButton}>
-            <ReactNative.Text style={styles.genreText}>{genre}</ReactNative.Text>
-          </ReactNative.TouchableOpacity>
+          <TouchableOpacity key={index} style={styles.genreButton}>
+            <Text style={styles.genreText}>{genre.nombre_genero}</Text>
+          </TouchableOpacity>
         ))}
-      </ReactNative.View>
-    </ReactNative.View>
+      </View>
+    </View>
   );
 };
 
-const styles = ReactNative.StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -32,13 +44,13 @@ const styles = ReactNative.StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: 'red',
-    marginBottom: 40
+    marginBottom: 40,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    paddingHorizontal: 5, 
+    paddingHorizontal: 5,
   },
   genreButton: {
     width: '48%',
