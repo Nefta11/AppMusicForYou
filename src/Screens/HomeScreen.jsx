@@ -1,8 +1,9 @@
-import * as React from 'react';
-import * as ReactNative from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou';
+import { getAllAlbums } from './api';
 
 const images = [
   require('../public/banner siuu.png'),
@@ -11,10 +12,12 @@ const images = [
 ];
 
 const HomeScreen = () => {
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [albums, setAlbums] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 10000);
@@ -22,70 +25,94 @@ const HomeScreen = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleAlbumPress = () => {
-    navigation.navigate('Album');
+  useEffect(() => {
+    fetchAlbums();
+  }, []);
+
+  const fetchAlbums = async () => {
+    try {
+      const response = await getAllAlbums();
+      if (response && response.result) {
+        setAlbums(response.result);
+      } else {
+        console.error('Error fetching albums: No result in response');
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching albums:', error.message);
+      setLoading(false);
+    }
+  };
+
+  const handleAlbumPress = (albumId) => {
+    navigation.navigate('Album', { albumId });
   };
 
   return (
-    <ReactNative.ScrollView style={styles.container}>
-      <ReactNative.View style={styles.logoContainer}>
+    <ScrollView style={styles.container}>
+      <View style={styles.logoContainer}>
         <MusicForYou width={200} height={90} />
-      </ReactNative.View>
+      </View>
 
-      <ReactNative.View style={styles.searchBar}>
-        <ReactNative.TextInput
+      <View style={styles.searchBar}>
+        <TextInput
           style={[styles.searchInput, { fontSize: 20 }]}
           placeholder="Buscar..."
           placeholderTextColor="red"
         />
         <Ionicons name="search-outline" size={20} color="red" />
-      </ReactNative.View>
+      </View>
 
-      <ReactNative.Image
+      <Image
         style={styles.banner}
         source={images[currentImageIndex]}
       />
 
-      <ReactNative.Text style={styles.sectionTitle}>Álbums</ReactNative.Text>
-      <ReactNative.View style={styles.albumRow}>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <ReactNative.TouchableOpacity
-            key={index}
-            style={styles.albumCardSquare}
-            onPress={handleAlbumPress}
-          >
-            <ReactNative.View style={styles.albumImageContainer}>
-              <ReactNative.Image
-                style={styles.albumImageSquare}
-                source={{ uri: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' }}
-              />
-            </ReactNative.View>
-            <ReactNative.Text style={styles.albumText}>True {index + 1}</ReactNative.Text>
-            <ReactNative.Text style={styles.albumText}>Avicii</ReactNative.Text>
-          </ReactNative.TouchableOpacity>
-        ))}
-        
-      </ReactNative.View>
+      <Text style={styles.sectionTitle}>Álbums</Text>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Cargando...</Text>
+        </View>
+      ) : (
+        <View style={styles.albumRow}>
+          {albums.map((album) => (
+            <TouchableOpacity
+              key={album.id}
+              style={styles.albumCardSquare}
+              onPress={() => handleAlbumPress(album.id)}
+            >
+              <View style={styles.albumImageContainer}>
+                <Image
+                  style={styles.albumImageSquare}
+                  source={{ uri: album.url_imagen }}
+                />
+              </View>
+              <Text style={styles.albumText}>{album.nombre_album}</Text>
+              <Text style={styles.albumText}>{album.nombre_artista}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
-      <ReactNative.Text style={styles.sectionTitle}>Artistas</ReactNative.Text>
-      <ReactNative.View style={styles.ArtistaRow}>
+      <Text style={styles.sectionTitle}>Artistas</Text>
+      <View style={styles.ArtistaRow}>
         {Array.from({ length: 3 }).map((_, index) => (
-          <ReactNative.View key={index} style={styles.ArtistaCardRound}>
-            <ReactNative.View style={styles.ArtistaImageContainer}>
-              <ReactNative.Image
+          <View key={index} style={styles.ArtistaCardRound}>
+            <View style={styles.ArtistaImageContainer}>
+              <Image
                 style={styles.ArtistaImageRound}
                 source={{ uri: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/tf.jpeg' }}
               />
-            </ReactNative.View>
-            <ReactNative.Text style={styles.ArtistaText}>Taylor Swift</ReactNative.Text>
-          </ReactNative.View>
+            </View>
+            <Text style={styles.ArtistaText}>Taylor Swift</Text>
+          </View>
         ))}
-      </ReactNative.View>
-    </ReactNative.ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 
-const styles = ReactNative.StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
@@ -159,10 +186,15 @@ const styles = ReactNative.StyleSheet.create({
   albumText: {
     textAlign: 'center',
   },
-  centeredView: {
+  loadingContainer: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'red',
   },
   ArtistaRow: {
     flexDirection: 'row',

@@ -199,6 +199,21 @@ export const deleteAlbum = async (albumData) => {
     return await response.json();
 };
 
+export const getAllAlbums = async () => {
+    const response = await fetch(`${URL_API}/getAllAlbums`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || 'Error fetching albums');
+    }
+    return data;
+};
+
+
 // Funciones para operaciones relacionadas con usuarios
 export const addUser = async (userData) => {
     const response = await fetch(`${URL_API}/addUser`, {
