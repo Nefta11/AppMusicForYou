@@ -28,7 +28,7 @@ const AlbumScreen = () => {
         <ReactNative.TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={34} color="red" />
         </ReactNative.TouchableOpacity>
-        <ReactNative.Text style={styles.headerText}>Album</ReactNative.Text>
+        <ReactNative.Text style={styles.headerText}>Álbum</ReactNative.Text>
         <ReactNative.View />
       </ReactNative.View>
 
