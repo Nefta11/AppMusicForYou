@@ -67,8 +67,8 @@ export const getArtist = async (artistData) => {
     return await response.json();
 };
 
-export const getAllArtists = async () => {
-    const response = await fetch(`${URL_API}/getAllArtists`, {
+export const getAllArtist = async () => {
+    const response = await fetch(`${URL_API}/getAllArtist`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

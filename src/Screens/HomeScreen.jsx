@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput 
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou';
-import { getAllAlbums } from './api';
+import { getAllAlbums, getAllArtist } from './api';
 
 const images = [
   require('../public/banner siuu.png'),
@@ -14,6 +14,7 @@ const images = [
 const HomeScreen = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [albums, setAlbums] = useState([]);
+  const [artists, setArtists] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
@@ -27,6 +28,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     fetchAlbums();
+    fetchArtists();
   }, []);
 
   const fetchAlbums = async () => {
@@ -40,6 +42,21 @@ const HomeScreen = () => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching albums:', error.message);
+      setLoading(false);
+    }
+  };
+
+  const fetchArtists = async () => {
+    try {
+      const response = await getAllArtist();
+      if (response && response.result) {
+        setArtists(response.result);
+      } else {
+        console.error('Error fetching artists: No result in response');
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching artists:', error.message);
       setLoading(false);
     }
   };
@@ -95,22 +112,31 @@ const HomeScreen = () => {
       )}
 
       <Text style={styles.sectionTitle}>Artistas</Text>
-      <View style={styles.ArtistaRow}>
-        {Array.from({ length: 3 }).map((_, index) => (
-          <View key={index} style={styles.ArtistaCardRound}>
-            <View style={styles.ArtistaImageContainer}>
-              <Image
-                style={styles.ArtistaImageRound}
-                source={{ uri: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/tf.jpeg' }}
-              />
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Cargando...</Text>
+        </View>
+      ) : (
+        <View style={styles.ArtistaRow}>
+          {artists.map((artist) => (
+            <View key={artist.id} style={styles.ArtistaCardRound}>
+              <View style={styles.ArtistaImageContainer}>
+                <Image
+                  style={styles.ArtistaImageRound}
+                  source={{ uri: artist.url_imagen }}
+                />
+              </View>
+              <Text style={styles.ArtistaText}>{artist.nombre_artista}</Text>
             </View>
-            <Text style={styles.ArtistaText}>Taylor Swift</Text>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 };
+
+// ... (rest of your code)
+
 
 const styles = StyleSheet.create({
   container: {
