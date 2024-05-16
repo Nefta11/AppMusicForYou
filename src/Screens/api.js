@@ -199,6 +199,22 @@ export const deleteAlbum = async (albumData) => {
     return await response.json();
 };
 
+export const getAlbumMusic = async (id) => {
+    const response = await fetch(`${URL_API}/getAlbumMusic`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || 'Error fetching album songs');
+    }
+    return data;
+};
+
+
 export const getAllAlbums = async () => {
     const response = await fetch(`${URL_API}/getAllAlbums`, {
         method: 'POST',
