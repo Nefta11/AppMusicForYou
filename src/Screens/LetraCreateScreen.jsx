@@ -1,7 +1,7 @@
 import * as ReactNative from 'react-native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
+
 
 const LetraCreateScreen = ({ navigation }) => {
   const [titulo, setTitulo] = useState('');
@@ -19,9 +19,6 @@ const LetraCreateScreen = ({ navigation }) => {
     console.log('Cancelar');
   };
 
-  const handleSeleccionarImagen = async () => {
-    // Código para seleccionar una imagen
-  };
 
   return (
     <ReactNative.ScrollView style={styles.container}>
@@ -107,7 +104,7 @@ const LetraCreateScreen = ({ navigation }) => {
 const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: 25,
     marginTop: 10
   },
   header: {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { getAllGenders } from './api';
+import * as ReactNative from 'react-native';
+
 
 const GenresScreen = () => {
   const [genres, setGenres] = useState([]);
@@ -21,6 +23,7 @@ const GenresScreen = () => {
   };
 
   return (
+    <ReactNative.ScrollView style={styles.container}>
     <View style={styles.container}>
       <Text style={styles.headerText}>Géneros Musicales</Text>
       {loading ? ( // Muestra "Cargando..." mientras los datos se están recuperando
@@ -37,14 +40,16 @@ const GenresScreen = () => {
         </View>
       )}
     </View>
+        </ReactNative.ScrollView>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    marginTop: 10,
+    padding: 10,
+    marginTop: 20,
   },
   headerText: {
     fontSize: 40,

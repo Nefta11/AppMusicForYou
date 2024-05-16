@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactNative from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou';
 
@@ -11,14 +12,19 @@ const images = [
 
 const HomeScreen = () => {
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 10000); 
+    }, 10000);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, []);
+
+  const handleAlbumPress = () => {
+    navigation.navigate('Album');
+  };
 
   return (
     <ReactNative.ScrollView style={styles.container}>
@@ -27,14 +33,13 @@ const HomeScreen = () => {
       </ReactNative.View>
 
       <ReactNative.View style={styles.searchBar}>
-  <ReactNative.TextInput
-    style={[styles.searchInput, { fontSize: 20 }]} 
-    placeholder="Buscar..."
-    placeholderTextColor="red"
-  />
-  <Ionicons name="search-outline" size={20} color="red" />
-</ReactNative.View>
-
+        <ReactNative.TextInput
+          style={[styles.searchInput, { fontSize: 20 }]}
+          placeholder="Buscar..."
+          placeholderTextColor="red"
+        />
+        <Ionicons name="search-outline" size={20} color="red" />
+      </ReactNative.View>
 
       <ReactNative.Image
         style={styles.banner}
@@ -43,9 +48,12 @@ const HomeScreen = () => {
 
       <ReactNative.Text style={styles.sectionTitle}>Álbums</ReactNative.Text>
       <ReactNative.View style={styles.albumRow}>
-
-  {Array.from({ length: 3 }).map((_, index) => (
-          <ReactNative.View key={index} style={styles.albumCardSquare}>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <ReactNative.TouchableOpacity
+            key={index}
+            style={styles.albumCardSquare}
+            onPress={handleAlbumPress}
+          >
             <ReactNative.View style={styles.albumImageContainer}>
               <ReactNative.Image
                 style={styles.albumImageSquare}
@@ -54,16 +62,13 @@ const HomeScreen = () => {
             </ReactNative.View>
             <ReactNative.Text style={styles.albumText}>True {index + 1}</ReactNative.Text>
             <ReactNative.Text style={styles.albumText}>Avicii</ReactNative.Text>
-          </ReactNative.View>
+          </ReactNative.TouchableOpacity>
         ))}
-
       </ReactNative.View>
 
       <ReactNative.Text style={styles.sectionTitle}>Artistas</ReactNative.Text>
       <ReactNative.View style={styles.ArtistaRow}>
-
-
-{Array.from({ length: 3 }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
           <ReactNative.View key={index} style={styles.ArtistaCardRound}>
             <ReactNative.View style={styles.ArtistaImageContainer}>
               <ReactNative.Image
@@ -83,7 +88,7 @@ const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    marginTop: -29,
+    marginTop: 10,
     backgroundColor: 'white'
   },
   searchBar: {

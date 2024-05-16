@@ -106,7 +106,7 @@ const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop:10,
+    marginTop:35,
   },
   header: {
     flexDirection: 'row',

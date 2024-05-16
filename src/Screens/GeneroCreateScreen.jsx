@@ -50,7 +50,7 @@ const GeneroCreateScreen = ({ navigation }) => {
 const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 25,
     marginTop: 10,
   },
   header: {

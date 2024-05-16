@@ -103,7 +103,7 @@ const AlbumCreateScreen = ({ navigation }) => {
 const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    padding: 25,
     marginTop: 10
   },
   header: {
