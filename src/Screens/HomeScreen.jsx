@@ -135,9 +135,6 @@ const HomeScreen = () => {
   );
 };
 
-// ... (rest of your code)
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
