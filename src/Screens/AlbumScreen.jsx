@@ -6,7 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 const songs = [
   { id: 1, title: 'Hey Brother', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
   { id: 2, title: 'Wake Me Up', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  // Agrega más canciones aquí
+  { id: 3, title: 'You Make up', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
+  { id: 4, title: 'Addicted To You', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
+  { id: 5, title: 'Dear Boy', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
+  { id: 6, title: 'Liar Liar', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
+  { id: 7, title: 'Shame On Me', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
+
 ];
 
 const AlbumScreen = () => {
@@ -35,8 +40,7 @@ const AlbumScreen = () => {
         <ReactNative.View style={styles.albumDetails}>
           <ReactNative.Text style={styles.albumTitle}>True</ReactNative.Text>
           <ReactNative.Text style={styles.albumArtist}>Avicii</ReactNative.Text>
-          <ReactNative.Text style={styles.albumInfo}>2012 Electronica</ReactNative.Text>
-          <ReactNative.Text style={styles.albumInfo}>10 canciones</ReactNative.Text>
+          <ReactNative.Text style={styles.albumInfo}>2013   Electronica   15 canciones</ReactNative.Text>
         </ReactNative.View>
       </ReactNative.View>
 
@@ -73,7 +77,7 @@ const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 30
+    marginTop: 30,
   },
   header: {
     flexDirection: 'row',
@@ -102,23 +106,26 @@ const styles = ReactNative.StyleSheet.create({
   albumTitle: {
     fontSize: 22,
     fontWeight: 'bold',
+    marginBottom: 7,
   },
   albumArtist: {
     fontSize: 18,
     color: 'gray',
+    marginBottom: 7,
   },
   albumInfo: {
     fontSize: 16,
     color: 'gray',
+    marginBottom: 7,
   },
   songList: {
-    padding: 10,
+    padding: 1,
   },
   songCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    marginBottom: 10,
+    padding: 20,
+    marginBottom: 15,
     backgroundColor: '#f9f9f9',
     borderRadius: 10,
   },
@@ -137,14 +144,14 @@ const styles = ReactNative.StyleSheet.create({
   },
   songDetails: {
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 16,
   },
   songTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   songArtist: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'gray',
   },
   viewLyricsButton: {

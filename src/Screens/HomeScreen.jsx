@@ -64,6 +64,7 @@ const HomeScreen = () => {
             <ReactNative.Text style={styles.albumText}>Avicii</ReactNative.Text>
           </ReactNative.TouchableOpacity>
         ))}
+        
       </ReactNative.View>
 
       <ReactNative.Text style={styles.sectionTitle}>Artistas</ReactNative.Text>

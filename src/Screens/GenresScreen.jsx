@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { getAllGenders } from './api';
-import * as ReactNative from 'react-native';
-
 
 const GenresScreen = () => {
   const [genres, setGenres] = useState([]);
@@ -23,25 +21,24 @@ const GenresScreen = () => {
   };
 
   return (
-    <ReactNative.ScrollView style={styles.container}>
     <View style={styles.container}>
-      <Text style={styles.headerText}>Géneros Musicales</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Géneros Musicales</Text>
+      </View>
       {loading ? ( // Muestra "Cargando..." mientras los datos se están recuperando
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
       ) : (
-        <View style={styles.grid}>
+        <ScrollView contentContainerStyle={styles.grid}>
           {genres.map((genre, index) => (
             <TouchableOpacity key={index} style={styles.genreButton}>
               <Text style={styles.genreText}>{genre.nombre_genero}</Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </ScrollView>
       )}
     </View>
-        </ReactNative.ScrollView>
-
   );
 };
 
@@ -49,15 +46,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 20,
+    marginTop: 30,
+  },
+  header: {
+    marginBottom: 12,
   },
   headerText: {
     fontSize: 40,
     fontWeight: 'bold',
-    marginBottom: 20,
     textAlign: 'center',
     color: 'red',
-    marginBottom: 40,
   },
   grid: {
     flexDirection: 'row',
@@ -83,12 +81,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   loadingText: {
     fontSize: 30,
