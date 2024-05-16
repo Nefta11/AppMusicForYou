@@ -61,8 +61,8 @@ const HomeScreen = () => {
     }
   };
 
-  const handleAlbumPress = (albumId) => {
-    navigation.navigate('Album', { albumId });
+  const handleAlbumPress = (album) => {
+    navigation.navigate('Album', { album });
   };
 
   return (
@@ -96,7 +96,7 @@ const HomeScreen = () => {
             <TouchableOpacity
               key={album.id}
               style={styles.albumCardSquare}
-              onPress={() => handleAlbumPress(album.id)}
+              onPress={() => handleAlbumPress(album)}
             >
               <View style={styles.albumImageContainer}>
                 <Image

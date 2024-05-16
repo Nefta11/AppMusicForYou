@@ -1,52 +1,62 @@
-import * as React from 'react';
-import * as ReactNative from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-
-const songs = [
-  { id: 1, title: 'Hey Brother', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  { id: 2, title: 'Wake Me Up', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  { id: 3, title: 'You Make up', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  { id: 4, title: 'Addicted To You', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  { id: 5, title: 'Dear Boy', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  { id: 6, title: 'Liar Liar', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-  { id: 7, title: 'Shame On Me', artist: 'Avicii', image: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' },
-
-];
+import { getAlbum, getAlbumMusic } from './api';
 
 const AlbumScreen = () => {
   const navigation = useNavigation();
-  const [selectedSongId, setSelectedSongId] = React.useState(null);
+  const route = useRoute();
+  const { album } = route.params;
+  const [songs, setSongs] = useState([]);
+  const [selectedSongId, setSelectedSongId] = useState(null);
+
+  useEffect(() => {
+    fetchAlbumMusic(album.id);
+  }, [album]);
+
+  const fetchAlbumMusic = async (id) => {
+    try {
+      const response = await getAlbumMusic(id);
+      if (response && response.result) {
+        setSongs(response.result);
+      } else {
+        console.error('Error fetching album songs: No result in response');
+      }
+    } catch (error) {
+      console.error('Error fetching album songs:', error.message);
+    }
+  };
 
   const handleSongPress = (id) => {
     setSelectedSongId(id);
   };
 
   return (
-    <ReactNative.ScrollView style={styles.container}>
-      <ReactNative.View style={styles.header}>
-        <ReactNative.TouchableOpacity onPress={() => navigation.goBack()}>
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={34} color="red" />
-        </ReactNative.TouchableOpacity>
-        <ReactNative.Text style={styles.headerText}>Álbum</ReactNative.Text>
-        <ReactNative.View />
-      </ReactNative.View>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Álbum</Text>
+        <View />
+      </View>
 
-      <ReactNative.View style={styles.albumInfoContainer}>
-        <ReactNative.Image
+      <View style={styles.albumInfoContainer}>
+        <Image
           style={styles.albumImage}
-          source={{ uri: 'https://raw.githubusercontent.com/Nefta11/AppMovil-MFY/main/src/public/1200x1200bb.jpg' }}
+          source={{ uri: album.url_imagen }}
         />
-        <ReactNative.View style={styles.albumDetails}>
-          <ReactNative.Text style={styles.albumTitle}>True</ReactNative.Text>
-          <ReactNative.Text style={styles.albumArtist}>Avicii</ReactNative.Text>
-          <ReactNative.Text style={styles.albumInfo}>2013   Electronica   15 canciones</ReactNative.Text>
-        </ReactNative.View>
-      </ReactNative.View>
+        <View style={styles.albumDetails}>
+          <Text style={styles.albumTitle}>{album.nombre_album}</Text>
+          <Text style={styles.albumArtist}>{album.nombre_artista}</Text>
+          <Text style={styles.albumInfo}>{album.año_lanzamiento}  Genero   15 canciones</Text>
+        </View>
+      </View>
 
-      <ReactNative.View style={styles.songList}>
+      <View style={styles.songList}>
         {songs.map((song) => (
-          <ReactNative.TouchableOpacity
+          <TouchableOpacity
             key={song.id}
             style={[
               styles.songCard,
@@ -54,26 +64,25 @@ const AlbumScreen = () => {
             ]}
             onPress={() => handleSongPress(song.id)}
           >
-            <ReactNative.Text style={styles.songNumber}>{song.id}</ReactNative.Text>
-            <ReactNative.Image
+            <Image
               style={styles.songImage}
-              source={{ uri: song.image }}
+              source={{ uri: song.url_imagen }}
             />
-            <ReactNative.View style={styles.songDetails}>
-              <ReactNative.Text style={styles.songTitle}>{song.title}</ReactNative.Text>
-              <ReactNative.Text style={styles.songArtist}>{song.artist}</ReactNative.Text>
-            </ReactNative.View>
-            <ReactNative.TouchableOpacity style={selectedSongId === song.id ? styles.viewLyricsButtonSelected : styles.viewLyricsButton}>
-              <ReactNative.Text style={selectedSongId === song.id ? styles.viewLyricsTextSelected : styles.viewLyricsText}>Ver Letra</ReactNative.Text>
-            </ReactNative.TouchableOpacity>
-          </ReactNative.TouchableOpacity>
+            <View style={styles.songDetails}>
+              <Text style={styles.songTitle}>{song.nombre_cancion}</Text>
+              <Text style={styles.songArtist}>{album.nombre_artista}</Text>
+            </View>
+            <TouchableOpacity style={selectedSongId === song.id ? styles.viewLyricsButtonSelected : styles.viewLyricsButton}>
+              <Text style={selectedSongId === song.id ? styles.viewLyricsTextSelected : styles.viewLyricsText}>Ver Letra</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
         ))}
-      </ReactNative.View>
-    </ReactNative.ScrollView>
+      </View>
+    </ScrollView>
   );
 };
 
-const styles = ReactNative.StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
