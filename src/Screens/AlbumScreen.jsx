@@ -72,20 +72,17 @@ const AlbumScreen = () => {
 const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    marginTop: 40,
+    padding: 10,
+    marginTop: 30
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    justifyContent: 'space-between',
+    marginBottom: 28,
   },
   headerText: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 20,
+    fontSize: 35,
     fontWeight: 'bold',
     color: 'red',
   },

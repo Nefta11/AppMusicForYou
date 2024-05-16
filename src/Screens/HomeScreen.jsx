@@ -88,7 +88,7 @@ const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    marginTop: 10,
+    marginTop: 1,
     backgroundColor: 'white'
   },
   searchBar: {
