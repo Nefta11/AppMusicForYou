@@ -31,8 +31,8 @@ const AlbumScreen = () => {
     }
   };
 
-  const handleSongPress = (id) => {
-    setSelectedSongId(id);
+  const handleSongPress = (nombreCancion) => {
+    navigation.navigate('VerLetra', { nombreCancion });
   };
 
   return (
@@ -75,7 +75,7 @@ const AlbumScreen = () => {
                 styles.songCard,
                 selectedSongId === song.id && styles.songCardSelected
               ]}
-              onPress={() => handleSongPress(song.id)}
+              onPress={() => handleSongPress(song.nombre_cancion)}
             >
               <Image
                 style={styles.songImage}

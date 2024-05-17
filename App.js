@@ -6,6 +6,7 @@ import HomeScreen from './src/Screens/HomeScreen.jsx';
 import GenresScreen from './src/Screens/GenresScreen.jsx';
 import CreateScreen from './src/Screens/CreateScreen.jsx';
 import AlbumScreen from './src/Screens/AlbumScreen.jsx';
+import VerLetraScreen from './src/Screens/VerLetraScreen.jsx'; // Importa la pantalla VerLetraScreen
 import { Ionicons } from '@expo/vector-icons';
 import 'react-native-gesture-handler';
 
@@ -22,6 +23,11 @@ const HomeStack = () => (
     <Stack.Screen 
       name="Album" 
       component={AlbumScreen} 
+      options={{ headerShown: false }} 
+    />
+    <Stack.Screen 
+      name="VerLetra" 
+      component={VerLetraScreen} 
       options={{ headerShown: false }} 
     />
   </Stack.Navigator>
