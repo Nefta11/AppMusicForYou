@@ -229,9 +229,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   viewLyricsButtonSelected: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+    paddingVertical:10,
+    paddingHorizontal: 20,
+    borderRadius: 15,
     backgroundColor: 'white',
   },
   viewLyricsText: {

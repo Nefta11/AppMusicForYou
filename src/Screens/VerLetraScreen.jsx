@@ -71,8 +71,8 @@ const VerLetraScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 27,
-    marginTop: 35,
+    padding: 10,
+    marginTop: 30,
   },
   header: {
     flexDirection: 'row',
