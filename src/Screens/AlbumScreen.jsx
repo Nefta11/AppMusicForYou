@@ -89,8 +89,18 @@ const AlbumScreen = () => {
                   source={{ uri: song.url_imagen }}
                 />
                 <View style={styles.songDetails}>
-                  <Text style={styles.songTitle}>{song.nombre_cancion}</Text>
-                  <Text style={styles.songArtist}>{album.nombre_artista}</Text>
+                  <Text style={[
+                    styles.songTitle,
+                    selectedSongId === song.id && styles.songTextSelected
+                  ]}>
+                    {song.nombre_cancion}
+                  </Text>
+                  <Text style={[
+                    styles.songArtist,
+                    selectedSongId === song.id && styles.songTextSelected
+                  ]}>
+                    {album.nombre_artista}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity
@@ -208,6 +218,9 @@ const styles = StyleSheet.create({
   songArtist: {
     fontSize: 16,
     color: 'gray',
+  },
+  songTextSelected: {
+    color: 'white',
   },
   viewLyricsButton: {
     paddingVertical: 5,
