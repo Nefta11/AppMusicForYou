@@ -63,7 +63,8 @@ const VerLetraScreen = () => {
           <View style={styles.lyricsCard}>
             <Text style={styles.lyricsText}>{songData.letra_cancion}</Text>
           </View>
-        </>
+        </>//cmabiar touchable por reac native elements
+        //funcion util funciones globales
       ) : (
         <View style={styles.noDataContainer}>
           <Text style={styles.noDataText}>No se encontró la canción</Text>
