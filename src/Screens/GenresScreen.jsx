@@ -38,7 +38,7 @@ const GenresScreen = () => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Géneros Musicales</Text>
       </View>
-      {loading ? ( // Muestra "Cargando..." mientras los datos se están recuperando
+      {loading ? ( 
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="red" />
           <Text style={styles.loadingText}>Cargando...</Text>
