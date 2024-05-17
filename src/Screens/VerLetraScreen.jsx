@@ -31,6 +31,11 @@ const VerLetraScreen = () => {
     }
   };
 
+  const extractVideoId = (url) => {
+    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?.*v=([^&]+)/);
+    return videoIdMatch ? videoIdMatch[1] : null;
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -52,7 +57,7 @@ const VerLetraScreen = () => {
             <YoutubePlayer
               height={300}
               play={false}
-              videoId={songData.url_video.split('v=')[1]}
+              videoId={extractVideoId(songData.url_video)}
             />
           </View>
           <View style={styles.lyricsCard}>
