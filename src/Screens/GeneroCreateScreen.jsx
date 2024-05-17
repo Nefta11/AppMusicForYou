@@ -28,6 +28,13 @@ const GeneroCreateScreen = ({ navigation }) => {
           placeholder="Nombre del género"
           placeholderTextColor="gray"
         />
+                <ReactNative.Text style={styles.label}>Descripcion:</ReactNative.Text>
+        <ReactNative.TextInput
+          style={styles.input}
+          placeholder="Descripcion del género"
+          placeholderTextColor="gray"
+        />
+
         <ReactNative.View style={styles.buttonsContainer}>
           <ReactNative.TouchableOpacity
             style={styles.button}
