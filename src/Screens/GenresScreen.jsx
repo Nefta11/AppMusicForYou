@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { getAllGenders } from './api';
 
 const GenresScreen = () => {
@@ -17,6 +17,7 @@ const GenresScreen = () => {
       setLoading(false); // Cambia el estado de carga a falso cuando los datos se cargan con éxito
     } catch (error) {
       console.error('Error fetching genres:', error);
+      setLoading(false); // Cambia el estado de carga a falso en caso de error también
     }
   };
 
@@ -27,6 +28,7 @@ const GenresScreen = () => {
       </View>
       {loading ? ( // Muestra "Cargando..." mientras los datos se están recuperando
         <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="red" />
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
       ) : (
@@ -83,9 +85,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadingText: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 18,
     color: 'red',
+    marginTop: 10,
   },
 });
 

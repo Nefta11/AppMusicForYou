@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { getAlbum, getAlbumMusic } from './api';
@@ -9,6 +9,7 @@ const AlbumScreen = () => {
   const route = useRoute();
   const { album } = route.params;
   const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedSongId, setSelectedSongId] = useState(null);
 
   useEffect(() => {
@@ -25,6 +26,8 @@ const AlbumScreen = () => {
       }
     } catch (error) {
       console.error('Error fetching album songs:', error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,28 +58,39 @@ const AlbumScreen = () => {
       </View>
 
       <View style={styles.songList}>
-        {songs.map((song) => (
-          <TouchableOpacity
-            key={song.id}
-            style={[
-              styles.songCard,
-              selectedSongId === song.id && styles.songCardSelected
-            ]}
-            onPress={() => handleSongPress(song.id)}
-          >
-            <Image
-              style={styles.songImage}
-              source={{ uri: song.url_imagen }}
-            />
-            <View style={styles.songDetails}>
-              <Text style={styles.songTitle}>{song.nombre_cancion}</Text>
-              <Text style={styles.songArtist}>{album.nombre_artista}</Text>
-            </View>
-            <TouchableOpacity style={selectedSongId === song.id ? styles.viewLyricsButtonSelected : styles.viewLyricsButton}>
-              <Text style={selectedSongId === song.id ? styles.viewLyricsTextSelected : styles.viewLyricsText}>Ver Letra</Text>
+        {loading ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="red" />
+            <Text style={styles.loadingText}>Cargando...</Text>
+          </View>
+        ) : songs.length === 0 ? (
+          <View style={styles.noSongsCard}>
+            <Text style={styles.noSongsText}>Aún no tiene canciones</Text>
+          </View>
+        ) : (
+          songs.map((song) => (
+            <TouchableOpacity
+              key={song.id}
+              style={[
+                styles.songCard,
+                selectedSongId === song.id && styles.songCardSelected
+              ]}
+              onPress={() => handleSongPress(song.id)}
+            >
+              <Image
+                style={styles.songImage}
+                source={{ uri: song.url_imagen }}
+              />
+              <View style={styles.songDetails}>
+                <Text style={styles.songTitle}>{song.nombre_cancion}</Text>
+                <Text style={styles.songArtist}>{album.nombre_artista}</Text>
+              </View>
+              <TouchableOpacity style={selectedSongId === song.id ? styles.viewLyricsButtonSelected : styles.viewLyricsButton}>
+                <Text style={selectedSongId === song.id ? styles.viewLyricsTextSelected : styles.viewLyricsText}>Ver Letra</Text>
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
-        ))}
+          ))
+        )}
       </View>
     </ScrollView>
   );
@@ -129,6 +143,28 @@ const styles = StyleSheet.create({
   },
   songList: {
     padding: 1,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: 'gray',
+    marginTop: 10,
+  },
+  noSongsCard: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    marginBottom: 15,
+    backgroundColor: 'red',
+    borderRadius: 10,
+  },
+  noSongsText: {
+    fontSize: 18,
+    color: 'white',
   },
   songCard: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou';
@@ -39,9 +39,9 @@ const HomeScreen = () => {
       } else {
         console.error('Error fetching albums: No result in response');
       }
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching albums:', error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -54,9 +54,9 @@ const HomeScreen = () => {
       } else {
         console.error('Error fetching artists: No result in response');
       }
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching artists:', error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -88,6 +88,7 @@ const HomeScreen = () => {
       <Text style={styles.sectionTitle}>Álbums</Text>
       {loading ? (
         <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="red" />
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
       ) : (
@@ -114,6 +115,7 @@ const HomeScreen = () => {
       <Text style={styles.sectionTitle}>Artistas</Text>
       {loading ? (
         <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="red" />
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
       ) : (
@@ -215,9 +217,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadingText: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 18,
     color: 'red',
+    marginTop: 10,
   },
   ArtistaRow: {
     flexDirection: 'row',
