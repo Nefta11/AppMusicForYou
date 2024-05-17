@@ -20,6 +20,9 @@ const HomeScreen = () => {
   const [showAllArtists, setShowAllArtists] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredAlbums, setFilteredAlbums] = useState([]);
+  const [filteredArtists, setFilteredArtists] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -40,6 +43,7 @@ const HomeScreen = () => {
       const response = await getAllAlbums();
       if (response && response.result) {
         setAlbums(response.result);
+        setFilteredAlbums(response.result);
       } else {
         console.error('Error fetching albums: No result in response');
       }
@@ -55,6 +59,7 @@ const HomeScreen = () => {
       const response = await getAllArtist();
       if (response && response.result) {
         setArtists(response.result);
+        setFilteredArtists(response.result);
       } else {
         console.error('Error fetching artists: No result in response');
       }
@@ -79,8 +84,26 @@ const HomeScreen = () => {
     setSelectedArtist(null);
   };
 
-  const displayedAlbums = showAllAlbums ? albums : albums.slice(0, 6);
-  const displayedArtists = showAllArtists ? artists : artists.slice(0, 6);
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query === '') {
+      setFilteredAlbums(albums);
+      setFilteredArtists(artists);
+    } else {
+      const filteredAlbumResults = albums.filter((album) =>
+        album.nombre_album.toLowerCase().includes(query.toLowerCase()) ||
+        album.nombre_artista.toLowerCase().includes(query.toLowerCase())
+      );
+      const filteredArtistResults = artists.filter((artist) =>
+        artist.nombre_artista.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredAlbums(filteredAlbumResults);
+      setFilteredArtists(filteredArtistResults);
+    }
+  };
+
+  const displayedAlbums = showAllAlbums ? filteredAlbums : filteredAlbums.slice(0, 6);
+  const displayedArtists = showAllArtists ? filteredArtists : filteredArtists.slice(0, 6);
 
   return (
     <ScrollView style={styles.container}>
@@ -93,6 +116,8 @@ const HomeScreen = () => {
           style={[styles.searchInput, { fontSize: 20 }]}
           placeholder="Buscar..."
           placeholderTextColor="red"
+          value={searchQuery}
+          onChangeText={handleSearch}
         />
         <Ionicons name="search-outline" size={20} color="red" />
       </View>
@@ -110,24 +135,28 @@ const HomeScreen = () => {
         </View>
       ) : (
         <>
-          <View style={styles.albumRow}>
-            {displayedAlbums.map((album) => (
-              <TouchableOpacity
-                key={album.id}
-                style={styles.albumCardSquare}
-                onPress={() => handleAlbumPress(album)}
-              >
-                <View style={styles.albumImageContainer}>
-                  <Image
-                    style={styles.albumImageSquare}
-                    source={{ uri: album.url_imagen }}
-                  />
-                </View>
-                <Text style={styles.albumText}>{album.nombre_album}</Text>
-                <Text style={styles.albumText}>{album.nombre_artista}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          {displayedAlbums.length > 0 ? (
+            <View style={styles.albumRow}>
+              {displayedAlbums.map((album) => (
+                <TouchableOpacity
+                  key={album.id}
+                  style={styles.albumCardSquare}
+                  onPress={() => handleAlbumPress(album)}
+                >
+                  <View style={styles.albumImageContainer}>
+                    <Image
+                      style={styles.albumImageSquare}
+                      source={{ uri: album.url_imagen }}
+                    />
+                  </View>
+                  <Text style={styles.albumText}>{album.nombre_album}</Text>
+                  <Text style={styles.albumText}>{album.nombre_artista}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          ) : (
+            <Text style={styles.noResultsText}>No encontrado</Text>
+          )}
           <TouchableOpacity style={styles.toggleButton} onPress={() => setShowAllAlbums(!showAllAlbums)}>
             <Text style={styles.toggleButtonText}>{showAllAlbums ? 'Ver Menos' : 'Ver Más'}</Text>
           </TouchableOpacity>
@@ -142,19 +171,23 @@ const HomeScreen = () => {
         </View>
       ) : (
         <>
-          <View style={styles.ArtistaRow}>
-            {displayedArtists.map((artist) => (
-              <TouchableOpacity key={artist.id} style={styles.ArtistaCardRound} onPress={() => handleArtistPress(artist)}>
-                <View style={styles.ArtistaImageContainer}>
-                  <Image
-                    style={styles.ArtistaImageRound}
-                    source={{ uri: artist.url_imagen }}
-                  />
-                </View>
-                <Text style={styles.ArtistaText}>{artist.nombre_artista}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          {displayedArtists.length > 0 ? (
+            <View style={styles.ArtistaRow}>
+              {displayedArtists.map((artist) => (
+                <TouchableOpacity key={artist.id} style={styles.ArtistaCardRound} onPress={() => handleArtistPress(artist)}>
+                  <View style={styles.ArtistaImageContainer}>
+                    <Image
+                      style={styles.ArtistaImageRound}
+                      source={{ uri: artist.url_imagen }}
+                    />
+                  </View>
+                  <Text style={styles.ArtistaText}>{artist.nombre_artista}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          ) : (
+            <Text style={styles.noResultsText}>No encontrado</Text>
+          )}
           <TouchableOpacity style={styles.toggleButtonArtis} onPress={() => setShowAllArtists(!showAllArtists)}>
             <Text style={styles.toggleButtonText}>{showAllArtists ? 'Ver Menos' : 'Ver Más'}</Text>
           </TouchableOpacity>
@@ -228,7 +261,7 @@ const styles = StyleSheet.create({
   albumRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between', //lavilin o gred
+    justifyContent: 'space-between',
     marginBottom: 20,
   },
   albumCardSquare: {
@@ -325,15 +358,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  noResultsText: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: 'red',
+    marginBottom: 20,
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo medio transparente
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     width: '80%',
-    backgroundColor: 'rgba(255, 0, 0, 0.8)', // Fondo rojo transparente
+    backgroundColor: 'rgba(255, 0, 0, 0.8)',
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
