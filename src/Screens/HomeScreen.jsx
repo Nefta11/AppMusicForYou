@@ -164,7 +164,7 @@ const HomeScreen = () => {
       <Modal
         visible={modalVisible}
         transparent={true}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={closeModal}
       >
         <View style={styles.modalContainer}>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   albumRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', //lavilin o gred
     marginBottom: 20,
   },
   albumCardSquare: {

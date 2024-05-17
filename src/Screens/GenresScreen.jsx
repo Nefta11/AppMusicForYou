@@ -55,7 +55,7 @@ const GenresScreen = () => {
       <Modal
         visible={modalVisible}
         transparent={true}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={closeModal}
       >
         <View style={styles.modalContainer}>
