@@ -71,7 +71,7 @@ const VerLetraScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 17,
+    padding: 27,
     marginTop: 35,
   },
   header: {
@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     alignItems: 'center',
-    marginBottom: -31,
+    marginBottom: 1,
   },
   lyricsCard: {
     padding: 30,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 35,
     alignItems: 'center',
-    marginBottom: 29
+    marginBottom: 60
   },
   lyricsText: {
     fontSize: 16,

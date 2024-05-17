@@ -31,8 +31,12 @@ const AlbumScreen = () => {
     }
   };
 
-  const handleSongPress = (nombreCancion) => {
+  const handleLyricsPress = (nombreCancion) => {
     navigation.navigate('VerLetra', { nombreCancion });
+  };
+
+  const handleCardPress = (songId) => {
+    setSelectedSongId(songId);
   };
 
   return (
@@ -69,26 +73,33 @@ const AlbumScreen = () => {
           </View>
         ) : (
           songs.map((song) => (
-            <TouchableOpacity
+            <View
               key={song.id}
               style={[
                 styles.songCard,
                 selectedSongId === song.id && styles.songCardSelected
               ]}
-              onPress={() => handleSongPress(song.nombre_cancion)}
             >
-              <Image
-                style={styles.songImage}
-                source={{ uri: song.url_imagen }}
-              />
-              <View style={styles.songDetails}>
-                <Text style={styles.songTitle}>{song.nombre_cancion}</Text>
-                <Text style={styles.songArtist}>{album.nombre_artista}</Text>
-              </View>
-              <TouchableOpacity style={selectedSongId === song.id ? styles.viewLyricsButtonSelected : styles.viewLyricsButton}>
+              <TouchableOpacity
+                onPress={() => handleCardPress(song.id)}
+                style={styles.songDetailsContainer}
+              >
+                <Image
+                  style={styles.songImage}
+                  source={{ uri: song.url_imagen }}
+                />
+                <View style={styles.songDetails}>
+                  <Text style={styles.songTitle}>{song.nombre_cancion}</Text>
+                  <Text style={styles.songArtist}>{album.nombre_artista}</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={selectedSongId === song.id ? styles.viewLyricsButtonSelected : styles.viewLyricsButton}
+                onPress={() => handleLyricsPress(song.nombre_cancion)}
+              >
                 <Text style={selectedSongId === song.id ? styles.viewLyricsTextSelected : styles.viewLyricsText}>Ver Letra</Text>
               </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
           ))
         )}
       </View>
@@ -177,10 +188,10 @@ const styles = StyleSheet.create({
   songCardSelected: {
     backgroundColor: 'red',
   },
-  songNumber: {
-    marginRight: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
+  songDetailsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
   },
   songImage: {
     width: 50,
@@ -188,7 +199,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   songDetails: {
-    flex: 1,
     marginLeft: 16,
   },
   songTitle: {
