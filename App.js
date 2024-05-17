@@ -8,7 +8,7 @@ import HomeScreen from './src/Screens/HomeScreen.jsx';
 import GenresScreen from './src/Screens/GenresScreen.jsx';
 import CreateScreen from './src/Screens/CreateScreen.jsx';
 import AlbumScreen from './src/Screens/AlbumScreen.jsx';
-import VerLetraScreen from './src/Screens/VerLetraScreen.jsx'; // Importar VerLetraScreen
+import VerLetraScreen from './src/Screens/VerLetraScreen.jsx'; 
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -28,7 +28,7 @@ const HomeStack = () => (
     />
     <Stack.Screen 
       name="VerLetra" 
-      component={VerLetraScreen} // Agregar VerLetraScreen al stack navigator
+      component={VerLetraScreen} 
       options={{ headerShown: false }} 
     />
   </Stack.Navigator>
