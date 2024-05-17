@@ -16,6 +16,8 @@ const HomeScreen = () => {
   const [albums, setAlbums] = useState([]);
   const [artists, setArtists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAllAlbums, setShowAllAlbums] = useState(false);
+  const [showAllArtists, setShowAllArtists] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -65,6 +67,9 @@ const HomeScreen = () => {
     navigation.navigate('Album', { album });
   };
 
+  const displayedAlbums = showAllAlbums ? albums : albums.slice(0, 6);
+  const displayedArtists = showAllArtists ? artists : artists.slice(0, 6);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.logoContainer}>
@@ -92,24 +97,29 @@ const HomeScreen = () => {
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
       ) : (
-        <View style={styles.albumRow}>
-          {albums.map((album) => (
-            <TouchableOpacity
-              key={album.id}
-              style={styles.albumCardSquare}
-              onPress={() => handleAlbumPress(album)}
-            >
-              <View style={styles.albumImageContainer}>
-                <Image
-                  style={styles.albumImageSquare}
-                  source={{ uri: album.url_imagen }}
-                />
-              </View>
-              <Text style={styles.albumText}>{album.nombre_album}</Text>
-              <Text style={styles.albumText}>{album.nombre_artista}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <>
+          <View style={styles.albumRow}>
+            {displayedAlbums.map((album) => (
+              <TouchableOpacity
+                key={album.id}
+                style={styles.albumCardSquare}
+                onPress={() => handleAlbumPress(album)}
+              >
+                <View style={styles.albumImageContainer}>
+                  <Image
+                    style={styles.albumImageSquare}
+                    source={{ uri: album.url_imagen }}
+                  />
+                </View>
+                <Text style={styles.albumText}>{album.nombre_album}</Text>
+                <Text style={styles.albumText}>{album.nombre_artista}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <TouchableOpacity style={styles.toggleButton} onPress={() => setShowAllAlbums(!showAllAlbums)}>
+            <Text style={styles.toggleButtonText}>{showAllAlbums ? 'Ver Menos' : 'Ver Más'}</Text>
+          </TouchableOpacity>
+        </>
       )}
 
       <Text style={styles.sectionTitle}>Artistas</Text>
@@ -119,19 +129,24 @@ const HomeScreen = () => {
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
       ) : (
-        <View style={styles.ArtistaRow}>
-          {artists.map((artist) => (
-            <View key={artist.id} style={styles.ArtistaCardRound}>
-              <View style={styles.ArtistaImageContainer}>
-                <Image
-                  style={styles.ArtistaImageRound}
-                  source={{ uri: artist.url_imagen }}
-                />
+        <>
+          <View style={styles.ArtistaRow}>
+            {displayedArtists.map((artist) => (
+              <View key={artist.id} style={styles.ArtistaCardRound}>
+                <View style={styles.ArtistaImageContainer}>
+                  <Image
+                    style={styles.ArtistaImageRound}
+                    source={{ uri: artist.url_imagen }}
+                  />
+                </View>
+                <Text style={styles.ArtistaText}>{artist.nombre_artista}</Text>
               </View>
-              <Text style={styles.ArtistaText}>{artist.nombre_artista}</Text>
-            </View>
-          ))}
-        </View>
+            ))}
+          </View>
+          <TouchableOpacity style={styles.toggleButtonArtis} onPress={() => setShowAllArtists(!showAllArtists)}>
+            <Text style={styles.toggleButtonText}>{showAllArtists ? 'Ver Menos' : 'Ver Más'}</Text>
+          </TouchableOpacity>
+        </>
       )}
     </ScrollView>
   );
@@ -254,6 +269,27 @@ const styles = StyleSheet.create({
   },
   ArtistaText: {
     textAlign: 'center',
+  },
+  toggleButton: {
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    borderRadius: 15,
+    padding: 10,
+    marginTop: -10,
+    marginBottom: 35,
+  },
+  toggleButtonArtis:{
+    alignSelf: 'center',
+    backgroundColor: 'red',
+    borderRadius: 15,
+    padding: 10,
+    marginTop: -10,
+    marginBottom: 40,
+  },
+  toggleButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
