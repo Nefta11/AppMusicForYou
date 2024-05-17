@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput, ActivityIndicator, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou';
@@ -18,6 +18,8 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [showAllAlbums, setShowAllAlbums] = useState(false);
   const [showAllArtists, setShowAllArtists] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedArtist, setSelectedArtist] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -65,6 +67,16 @@ const HomeScreen = () => {
 
   const handleAlbumPress = (album) => {
     navigation.navigate('Album', { album });
+  };
+
+  const handleArtistPress = (artist) => {
+    setSelectedArtist(artist);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedArtist(null);
   };
 
   const displayedAlbums = showAllAlbums ? albums : albums.slice(0, 6);
@@ -132,7 +144,7 @@ const HomeScreen = () => {
         <>
           <View style={styles.ArtistaRow}>
             {displayedArtists.map((artist) => (
-              <View key={artist.id} style={styles.ArtistaCardRound}>
+              <TouchableOpacity key={artist.id} style={styles.ArtistaCardRound} onPress={() => handleArtistPress(artist)}>
                 <View style={styles.ArtistaImageContainer}>
                   <Image
                     style={styles.ArtistaImageRound}
@@ -140,7 +152,7 @@ const HomeScreen = () => {
                   />
                 </View>
                 <Text style={styles.ArtistaText}>{artist.nombre_artista}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
           <TouchableOpacity style={styles.toggleButtonArtis} onPress={() => setShowAllArtists(!showAllArtists)}>
@@ -148,6 +160,28 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </>
       )}
+
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Image
+              style={styles.modalImage}
+              source={{ uri: selectedArtist?.url_imagen }}
+            />
+            <Text style={styles.modalTitle}>{selectedArtist?.nombre_artista}</Text>
+            <Text style={styles.modalDebut}>Debut: {selectedArtist?.debut}</Text>
+            <Text style={styles.modalDescription}>{selectedArtist?.descripcion}</Text>
+            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -157,7 +191,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     marginTop: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   searchBar: {
     flexDirection: 'row',
@@ -289,6 +323,52 @@ const styles = StyleSheet.create({
   toggleButtonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo medio transparente
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: 'rgba(255, 0, 0, 0.8)', // Fondo rojo transparente
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 10,
+  },
+  modalDebut: {
+    fontSize: 18,
+    color: 'white',
+    marginBottom: 10,
+  },
+  modalDescription: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  closeButton: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+  },
+  closeButtonText: {
+    fontSize: 18,
+    color: 'red',
     fontWeight: 'bold',
   },
 });
