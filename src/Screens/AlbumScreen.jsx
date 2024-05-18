@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { getAlbumMusic } from './api';
+import { getAlbumMusic } from '../../api';
 
 const AlbumScreen = () => {
   const navigation = useNavigation();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Modal } from 'react-native';
-import { getAllGenders } from './api'; // Importar la función de la API
+import { getAllGenders } from '../../api'; 
 
 const GenresScreen = () => {
   const [genres, setGenres] = useState([]);

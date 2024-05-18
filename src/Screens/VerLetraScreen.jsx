@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { getPerson } from './api';
+import { getPerson } from '../../api';
 import YoutubePlayer from 'react-native-youtube-iframe';
 
 const VerLetraScreen = () => {

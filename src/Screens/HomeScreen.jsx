@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, TextInput,
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou';
-import { getAllAlbums, getAllArtist } from './api';
+import { getAllAlbums, getAllArtist } from '../../api';
 
 const images = [
   require('../public/banner siuu.png'),
