@@ -59,15 +59,15 @@ const styles = StyleSheet.create({
   card: {
     width: '85%',
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 25,
     backgroundColor: 'white',
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 15,
     color: 'black',
   },
   subtitle: {
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: 'grey',
-    borderRadius: 5,
-    marginBottom: 15,
+    borderRadius: 25,
+    marginBottom: 25,
   },
   passwordContainer: {
     flexDirection: 'row',
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'red',
     padding: 15,
-    borderRadius: 5,
-    marginTop: 20,
+    borderRadius: 25,
+    marginTop: 29,
     width: '100%',
     alignItems: 'center',
   },
