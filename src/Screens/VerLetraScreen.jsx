@@ -11,6 +11,8 @@ const VerLetraScreen = () => {
   const { nombreCancion } = route.params;
   const [songData, setSongData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [videoLoading, setVideoLoading] = useState(true);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     fetchSongData(nombreCancion);
@@ -32,7 +34,7 @@ const VerLetraScreen = () => {
   };
 
   const extractVideoId = (url) => {
-    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?.*v=([^&]+)/);
+    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:embed\/|v\/|watch\?v=)|youtu\.be\/)([^&?/]+)/);
     return videoIdMatch ? videoIdMatch[1] : null;
   };
 
@@ -54,17 +56,24 @@ const VerLetraScreen = () => {
       ) : songData ? (
         <>
           <View style={styles.videoContainer}>
-            <YoutubePlayer
-              height={300}
-              play={false}
-              videoId={extractVideoId(songData.url_video)}
-            />
+            {videoLoading ? (
+              <Text style={styles.loadingText}>Cargando video...</Text>
+            ) : videoError ? (
+              <Text style={styles.loadingText}>Error al cargar el video</Text>
+            ) : (
+              <YoutubePlayer
+                height={300}
+                play={false}
+                videoId={extractVideoId(songData.url_video)}
+                onReady={() => setVideoLoading(false)}
+                onError={() => setVideoError(true)}
+              />
+            )}
           </View>
           <View style={styles.lyricsCard}>
             <Text style={styles.lyricsText}>{songData.letra_cancion}</Text>
           </View>
-        </>//cmabiar touchable por reac native elements
-        //funcion util funciones globales
+        </>
       ) : (
         <View style={styles.noDataContainer}>
           <Text style={styles.noDataText}>No se encontró la canción</Text>
@@ -95,7 +104,7 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     alignItems: 'center',
-    marginBottom: 1,
+    marginBottom: 20,
   },
   lyricsCard: {
     padding: 30,
