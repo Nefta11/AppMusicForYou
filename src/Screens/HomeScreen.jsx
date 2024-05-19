@@ -23,6 +23,7 @@ const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredAlbums, setFilteredAlbums] = useState([]);
   const [filteredArtists, setFilteredArtists] = useState([]);
+  const [userModalVisible, setUserModalVisible] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -105,10 +106,23 @@ const HomeScreen = () => {
   const displayedAlbums = showAllAlbums ? filteredAlbums : filteredAlbums.slice(0, 6);
   const displayedArtists = showAllArtists ? filteredArtists : filteredArtists.slice(0, 6);
 
+  const handleUserIconPress = () => {
+    setUserModalVisible(true);
+  };
+
+  const handleLogout = () => {
+    setUserModalVisible(false);
+    navigation.navigate('Login');
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.logoContainer}>
-        <MusicForYou width={200} height={90} />
+      <View style={styles.header}>
+        <MusicForYou width={200} height={90} style={styles.logo} />
+        <TouchableOpacity style={styles.userIconContainer} onPress={handleUserIconPress}>
+          <Ionicons name="person-circle-outline" size={30} color="red" />
+          <Text style={styles.userText}>Hola Neftali</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.searchBar}>
@@ -215,6 +229,21 @@ const HomeScreen = () => {
           </View>
         </View>
       </Modal>
+
+      <Modal
+        visible={userModalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setUserModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.userModalContent}>
+            <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+              <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -226,6 +255,27 @@ const styles = StyleSheet.create({
     marginTop: 1,
     backgroundColor: 'white',
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    marginTop: 30,
+  },
+  logo: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  userIconContainer: {
+    position: 'absolute',
+    right: 0,
+    alignItems: 'center',
+  },
+  userText: {
+    marginTop: 5,
+    fontSize: 17,
+    color: 'red',
+  },
   searchBar: {
     flexDirection: 'row',
     borderWidth: 2,
@@ -234,12 +284,6 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     marginBottom: 30,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    marginTop: 30,
   },
   searchInput: {
     flex: 1,
@@ -345,7 +389,7 @@ const styles = StyleSheet.create({
     marginTop: -10,
     marginBottom: 35,
   },
-  toggleButtonArtis:{
+  toggleButtonArtis: {
     alignSelf: 'center',
     backgroundColor: 'red',
     borderRadius: 15,
@@ -408,6 +452,23 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 18,
     color: 'red',
+    fontWeight: 'bold',
+  },
+  userModalContent: {
+    width: '70%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+  },
+  logoutButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+  },
+  logoutButtonText: {
+    fontSize: 18,
+    color: 'white',
     fontWeight: 'bold',
   },
 });

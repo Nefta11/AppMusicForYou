@@ -31,16 +31,17 @@ const LoginScreen = () => {
         />
         <View style={styles.passwordContainer}>
           <TextInput
-            style={styles.input}
+            style={styles.passwordInput}
             placeholder="Contraseña"
             value={password}
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.iconContainer}>
             <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="grey" />
           </TouchableOpacity>
         </View>
+        <Text style={styles.createAccountText}>¿No tienes cuenta? Crea una</Text>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Acceder</Text>
         </TouchableOpacity>
@@ -88,12 +89,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
+    borderWidth: 1,
+    borderColor: 'grey',
+    borderRadius: 25,
+    marginBottom: 25,
+    paddingHorizontal: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 10,
+  },
+  iconContainer: {
+    padding: 5,
   },
   button: {
     backgroundColor: 'red',
     padding: 15,
     borderRadius: 25,
-    marginTop: 29,
+    marginTop: 20,
     width: '100%',
     alignItems: 'center',
   },
@@ -101,6 +114,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  createAccountText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: 'grey',
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });
 
