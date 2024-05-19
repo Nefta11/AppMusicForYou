@@ -57,7 +57,10 @@ const VerLetraScreen = () => {
         <>
           <View style={styles.videoContainer}>
             {videoLoading ? (
-              <Text style={styles.loadingText}>Cargando video...</Text>
+              <View style={styles.videoLoadingContainer}>
+                <ActivityIndicator size="large" color="red" />
+                <Text style={styles.videoLoadingText}>Cargando video...</Text>
+              </View>
             ) : videoError ? (
               <Text style={styles.loadingText}>Error al cargar el video</Text>
             ) : (
@@ -123,6 +126,15 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   loadingText: {
+    fontSize: 18,
+    color: 'gray',
+    marginTop: 10,
+  },
+  videoLoadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  videoLoadingText: {
     fontSize: 18,
     color: 'gray',
     marginTop: 10,
