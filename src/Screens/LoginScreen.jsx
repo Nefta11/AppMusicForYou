@@ -1,3 +1,4 @@
+// LoginScreen.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -41,7 +42,12 @@ const LoginScreen = () => {
             <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="grey" />
           </TouchableOpacity>
         </View>
-        <Text style={styles.createAccountText}>¿No tienes cuenta? Crea una</Text>
+        <Text style={styles.createAccountText}>
+          ¿No tienes cuenta?{' '}
+          <Text onPress={() => navigation.navigate('CrearCuenta')} style={styles.linkText}>
+            Crea una
+          </Text>
+        </Text>
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Acceder</Text>
         </TouchableOpacity>
@@ -121,6 +127,9 @@ const styles = StyleSheet.create({
     color: 'grey',
     textAlign: 'center',
     marginBottom: 10,
+  },
+  linkText: {
+    color: 'blue',
   },
 });
 

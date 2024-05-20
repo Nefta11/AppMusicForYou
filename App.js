@@ -9,7 +9,8 @@ import GenresScreen from './src/Screens/GenresScreen.jsx';
 import CreateScreen from './src/Screens/CreateScreen.jsx';
 import AlbumScreen from './src/Screens/AlbumScreen.jsx';
 import VerLetraScreen from './src/Screens/VerLetraScreen.jsx';
-import LoginScreen from './src/Screens/LoginScreen.jsx'; // Importa la pantalla de inicio de sesión
+import LoginScreen from './src/Screens/LoginScreen.jsx';
+import CrearCuentaScreen from './src/Screens/CrearCuentaScreen.jsx'; // Importa la pantalla de crear cuenta
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -77,6 +78,11 @@ const App = () => {
           <Stack.Screen 
             name="Login" 
             component={LoginScreen} 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen 
+            name="CrearCuenta" 
+            component={CrearCuentaScreen} 
             options={{ headerShown: false }} 
           />
           <Stack.Screen 
