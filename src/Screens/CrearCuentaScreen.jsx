@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: 'grey',
-    borderRadius: 25,
+    borderRadius: 18,
     marginBottom: 25,
   },
   passwordContainer: {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderColor: 'grey',
-    borderRadius: 25,
+    borderRadius: 18,
     marginBottom: 25,
     paddingHorizontal: 10,
   },
