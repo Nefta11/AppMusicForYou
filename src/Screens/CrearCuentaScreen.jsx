@@ -146,5 +146,4 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
 });
-
 export default CrearCuentaScreen;
