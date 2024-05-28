@@ -56,7 +56,7 @@ const VerLetraScreen = () => {
       ) : songData ? (
         <>
           <View style={styles.videoContainer}>
-            {videoLoading ? (
+            {videoLoading && !videoError ? (
               <View style={styles.videoLoadingContainer}>
                 <ActivityIndicator size="large" color="red" />
                 <Text style={styles.videoLoadingText}>Cargando video...</Text>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 35,
     alignItems: 'center',
-    marginBottom: 60
+    marginBottom: 60,
   },
   lyricsText: {
     fontSize: 16,
