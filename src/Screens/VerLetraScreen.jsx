@@ -13,6 +13,7 @@ const VerLetraScreen = () => {
   const [loading, setLoading] = useState(true);
   const [videoLoading, setVideoLoading] = useState(true);
   const [videoError, setVideoError] = useState(false);
+  const [videoId, setVideoId] = useState(null);
 
   useEffect(() => {
     fetchSongData(nombreCancion);
@@ -22,7 +23,15 @@ const VerLetraScreen = () => {
     try {
       const response = await getPerson({ nombre });
       if (response && response.result && response.result.length > 0) {
-        setSongData(response.result[0]);
+        const data = response.result[0];
+        setSongData(data);
+        const id = extractVideoId(data.url_video);
+        if (id) {
+          setVideoId(id);
+        } else {
+          console.error('Invalid video URL');
+          setVideoError(true);
+        }
       } else {
         console.error('Error fetching song data: No result in response');
       }
@@ -67,7 +76,7 @@ const VerLetraScreen = () => {
               <YoutubePlayer
                 height={300}
                 play={false}
-                videoId={extractVideoId(songData.url_video)}
+                videoId={videoId}
                 onReady={() => setVideoLoading(false)}
                 onError={() => setVideoError(true)}
               />
