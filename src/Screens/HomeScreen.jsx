@@ -143,7 +143,7 @@ const HomeScreen = () => {
 
       <Text style={styles.sectionTitle}>Álbums</Text>
       {loading ? (
-        <View style={styles.loadingContainer}>
+        <View style={styles.loadingContainer} >
           <ActivityIndicator size="large" color="red" />
           <Text style={styles.loadingText}>Cargando...</Text>
         </View>
@@ -156,6 +156,7 @@ const HomeScreen = () => {
                   key={album.id}
                   style={styles.albumCardSquare}
                   onPress={() => handleAlbumPress(album)}
+                  activeOpacity={1}
                 >
                   <View style={styles.albumImageContainer}>
                     <Image
@@ -188,7 +189,7 @@ const HomeScreen = () => {
           {displayedArtists.length > 0 ? (
             <View style={styles.ArtistaRow}>
               {displayedArtists.map((artist) => (
-                <TouchableOpacity key={artist.id} style={styles.ArtistaCardRound} onPress={() => handleArtistPress(artist)}>
+                <TouchableOpacity key={artist.id} style={styles.ArtistaCardRound} onPress={() => handleArtistPress(artist)} activeOpacity={1}>
                   <View style={styles.ArtistaImageContainer}>
                     <Image
                       style={styles.ArtistaImageRound}

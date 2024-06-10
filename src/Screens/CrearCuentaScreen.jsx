@@ -1,28 +1,41 @@
-// LoginScreen.js
+// CrearCuentaScreen.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou'; // Asegúrate de que la ruta es correcta
 
-const LoginScreen = () => {
+const CrearCuentaScreen = () => {
+  const [nombre, setNombre] = useState('');
+  const [apellidos, setApellidos] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
 
-  const handleLogin = () => {
-    // Aquí se manejaría la autenticación con la API, por ahora solo navegamos a MainTabs
-    navigation.navigate('MainTabs');
+  const handleCreateAccount = () => {
+    // Aquí se manejaría la creación de la cuenta con la API
+    navigation.navigate('Login');
   };
 
-  
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <MusicForYou width={200} height={90} />
-        <Text style={styles.title}>Iniciar Sesión</Text>
-        <Text style={styles.subtitle}>Por favor ingresa tu correo y contraseña para acceder</Text>
+        <Text style={styles.title}>Crea una cuenta</Text>
+        <Text style={styles.subtitle}>Completa los siguientes campos para crear tu cuenta</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre"
+          value={nombre}
+          onChangeText={setNombre}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Apellidos"
+          value={apellidos}
+          onChangeText={setApellidos}
+        />
         <TextInput
           style={styles.input}
           placeholder="Correo electrónico"
@@ -44,13 +57,13 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <Text style={styles.createAccountText}>
-          ¿No tienes cuenta?{' '}
-          <Text onPress={() => navigation.navigate('CrearCuenta')} style={styles.linkText}>
-            Crea una
+          ¿Ya tienes cuenta?{' '}
+          <Text onPress={() => navigation.navigate('Login')} style={styles.linkText}>
+            Iniciar sesión
           </Text>
         </Text>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Acceder</Text>
+        <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+          <Text style={styles.buttonText}>Crear Cuenta</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -133,5 +146,4 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
 });
-
-export default LoginScreen;
+export default CrearCuentaScreen;
