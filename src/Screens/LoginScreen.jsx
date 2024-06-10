@@ -15,6 +15,7 @@ const LoginScreen = () => {
     navigation.navigate('MainTabs');
   };
 
+  
   return (
     <View style={styles.container}>
       <View style={styles.card}>
