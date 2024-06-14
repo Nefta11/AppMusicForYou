@@ -1,21 +1,27 @@
 // CrearCuentaScreen.js
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import MusicForYou from '../../svg/MusicForYou'; // Asegúrate de que la ruta es correcta
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import MusicForYou from "../../svg/MusicForYou"; // Asegúrate de que la ruta es correcta
 
 const CrearCuentaScreen = () => {
-  const [nombre, setNombre] = useState('');
-  const [apellidos, setApellidos] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [nombre, setNombre] = useState("");
+  const [apellidos, setApellidos] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
 
   const handleCreateAccount = () => {
     // Aquí se manejaría la creación de la cuenta con la API
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   };
 
   return (
@@ -23,7 +29,9 @@ const CrearCuentaScreen = () => {
       <View style={styles.card}>
         <MusicForYou width={200} height={90} />
         <Text style={styles.title}>Crea una cuenta</Text>
-        <Text style={styles.subtitle}>Completa los siguientes campos para crear tu cuenta</Text>
+        <Text style={styles.subtitle}>
+          Completa los siguientes campos para crear tu cuenta
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Nombre"
@@ -52,13 +60,23 @@ const CrearCuentaScreen = () => {
             onChangeText={setPassword}
             secureTextEntry={!showPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.iconContainer}>
-            <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="grey" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.iconContainer}
+          >
+            <Ionicons
+              name={showPassword ? "eye-off" : "eye"}
+              size={24}
+              color="grey"
+            />
           </TouchableOpacity>
         </View>
         <Text style={styles.createAccountText}>
-          ¿Ya tienes cuenta?{' '}
-          <Text onPress={() => navigation.navigate('Login')} style={styles.linkText}>
+          ¿Ya tienes cuenta?{" "}
+          <Text
+            onPress={() => navigation.navigate("Login")}
+            style={styles.linkText}
+          >
             Iniciar sesión
           </Text>
         </Text>
@@ -73,44 +91,44 @@ const CrearCuentaScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
   },
   card: {
-    width: '85%',
+    width: "85%",
     padding: 20,
     borderRadius: 25,
-    backgroundColor: 'white',
-    alignItems: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
   },
   title: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
     marginBottom: 15,
-    color: 'black',
+    color: "black",
   },
   subtitle: {
     fontSize: 16,
-    color: 'grey',
-    textAlign: 'center',
+    color: "grey",
+    textAlign: "center",
     marginBottom: 20,
   },
   input: {
-    width: '100%',
+    width: "100%",
     padding: 10,
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: "grey",
     borderRadius: 18,
     marginBottom: 25,
   },
   passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: "grey",
     borderRadius: 18,
     marginBottom: 25,
     paddingHorizontal: 10,
@@ -123,27 +141,27 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   button: {
-    backgroundColor: 'red',
+    backgroundColor: "red",
     padding: 15,
     borderRadius: 25,
     marginTop: 20,
-    width: '70%',
-    alignItems: 'center',
+    width: "70%",
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   createAccountText: {
     marginTop: 10,
     fontSize: 14,
-    color: 'grey',
-    textAlign: 'center',
+    color: "grey",
+    textAlign: "center",
     marginBottom: 10,
   },
   linkText: {
-    color: 'blue',
+    color: "blue",
   },
 });
 export default CrearCuentaScreen;
