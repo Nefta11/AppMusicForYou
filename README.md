@@ -10,7 +10,7 @@ MusicForYou es una aplicaci처n m처vil desarrollada en React Native que interact�
 - **Interfaz Intuitiva**: La aplicaci처n ofrece una experiencia de usuario fluida y amigable, con una navegaci처n sencilla y elementos visuales atractivos.
 
 ## Capturas de Pantalla
-
+   
 ### Pantalla de Inicio de Sesi처n
 <img src="https://raw.githubusercontent.com/Nefta11/AppMusicForYou/main/src/public/Screenshot_1717172107.png" width="250">
 
