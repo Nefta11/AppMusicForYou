@@ -1,7 +1,7 @@
 ﻿# MusicForYou...!
 MusicForYou es una aplicación móvil desarrollada en React Native que interactúa con una API creada en Slim. El propósito de esta aplicación es permitir a los usuarios crear y gestionar sus propias canciones, letras, artistas y géneros musicales. MusicForYou ofrece una experiencia personalizada, permitiendo a los usuarios registrarse, iniciar sesión y disfrutar de una interfaz intuitiva para gestionar su música.
       
-## Características 
+## Características     
 
 - **Autenticación de Usuarios**: Los usuarios pueden crear una cuenta y luego iniciar sesión para acceder a las funcionalidades completas de la aplicación.
 - **Gestión de Canciones y Letras**: Permite a los usuarios crear y visualizar sus propias canciones y letras.
