@@ -38,11 +38,3 @@ MusicForYou es una aplicación móvil desarrollada en React Native que interact�
 ### Lista y detalle del Género
 <img src="https://raw.githubusercontent.com/Nefta11/AppMusicForYou/main/src/public/Screenshot_1717172185.png" width="250">
 
-## Instalación y Uso
-
-Para comenzar con la aplicación MusicForYou, sigue estos pasos:
-
-1. **Clona el repositorio**:
-   ```sh
-   git clone https://github.com/Nefta11/AppMusicForYou.git
-   cd AppMusicForYou
