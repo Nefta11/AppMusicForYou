@@ -26,6 +26,8 @@ const LoginScreen = () => {
       } else {
         // Muestra un mensaje de error si las credenciales son incorrectas
         Alert.alert('Error', response.message);
+        navigation.navigate('MainTabs');
+
       }
     } catch (error) {
       // Maneja errores en la comunicación con la API
