@@ -1,9 +1,9 @@
-// LoginScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou'; // Asegúrate de que la ruta es correcta
+import { loginUser } from '../../api';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -11,9 +11,25 @@ const LoginScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
 
-  const handleLogin = () => {
-    // Aquí se manejaría la autenticación con la API, por ahora solo navegamos a MainTabs
-    navigation.navigate('MainTabs');
+  const handleLogin = async () => {
+    try {
+      const params = {
+        correo: email,
+        password: password,
+      };
+      const response = await loginUser(params);
+
+      if (response.success) {
+        // Navega a la pantalla principal si el inicio de sesión es exitoso
+        navigation.navigate('HomeScreen');
+      } else {
+        // Muestra un mensaje de error si las credenciales son incorrectas
+        Alert.alert('Error', response.message);
+      }
+    } catch (error) {
+      // Maneja errores en la comunicación con la API
+      Alert.alert('Error', 'Ocurrió un error al intentar iniciar sesión.');
+    }
   };
 
   return (
