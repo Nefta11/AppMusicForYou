@@ -1,9 +1,9 @@
-// CrearCuentaScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import MusicForYou from '../../svg/MusicForYou'; // Asegúrate de que la ruta es correcta
+import { addUser } from '../../api'; // Importar la función desde tu archivo de API
 
 const CrearCuentaScreen = () => {
   const [nombre, setNombre] = useState('');
@@ -13,9 +13,31 @@ const CrearCuentaScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
 
-  const handleCreateAccount = () => {
-    // Aquí se manejaría la creación de la cuenta con la API
-    navigation.navigate('Login');
+  const handleCreateAccount = async () => {
+    // Crear un objeto con los datos que vas a enviar a la API
+    const params = {
+      nombre: nombre,
+      apellido: apellidos,
+      correo: email,
+      contraseña: password,
+    };
+
+    try {
+      // Llamar a la función addUser para registrar el usuario
+      const response = await addUser(params);
+
+      // Verificar si el registro fue exitoso
+      if (response.success) {
+        Alert.alert('Éxito', 'Usuario registrado correctamente', [
+          { text: 'OK', onPress: () => navigation.navigate('Login') },
+        ]);
+      } else {
+        Alert.alert('Error', response.message || 'No se pudo completar el registro');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Hubo un problema con el registro');
+    }
   };
 
   return (
@@ -146,4 +168,5 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
 });
+
 export default CrearCuentaScreen;
