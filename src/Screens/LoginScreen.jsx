@@ -18,8 +18,9 @@ const LoginScreen = () => {
         password: password,
       };
       const response = await loginUser(params);
-
+  
       if (response.success) {
+        console.log('Inicio de sesión exitoso');
         // Navega a la pantalla principal si el inicio de sesión es exitoso
         navigation.navigate('MainTabs');
       } else {
@@ -31,6 +32,7 @@ const LoginScreen = () => {
       Alert.alert('Error', 'Ocurrió un error al intentar iniciar sesión.');
     }
   };
+  
 
   return (
     <View style={styles.container}>
