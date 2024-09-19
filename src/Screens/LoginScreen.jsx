@@ -21,7 +21,7 @@ const LoginScreen = () => {
 
       if (response.success) {
         // Navega a la pantalla principal si el inicio de sesión es exitoso
-        navigation.navigate('HomeScreen');
+        navigation.navigate('MainTabs');
       } else {
         // Muestra un mensaje de error si las credenciales son incorrectas
         Alert.alert('Error', response.message);
